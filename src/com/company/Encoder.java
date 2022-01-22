@@ -20,5 +20,4 @@ public class Encoder {
         }
         return sb.toString();
     }
-
 }
