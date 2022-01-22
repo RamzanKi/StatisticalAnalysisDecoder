@@ -27,7 +27,7 @@ public class Decoder {
         return sb.toString();
     }
     //BruteForce. путем перебора, подобрать ключ и расшифровать текст.
-    public String etTuBrute(String encode, int key) { // плохо работает с очень большим количеством текста
+    public String etTuBrute(String encode, int key) {
         String decode = "";
         while (true) {
             decode = decodeText(encode, key);
@@ -47,34 +47,35 @@ public class Decoder {
         char[] chars = encode.toCharArray();
         StringBuilder sb = new StringBuilder();
 
-        HashMap<Character, Double> mapTest = createStatisticMap(test);
-        HashMap<Character, Double> mapEncode = createStatisticMap(encode);
+        HashMap<Character, Integer> mapTest = createStatisticMap(test);
+        HashMap<Character, Integer> mapEncode = createStatisticMap(encode);
 
-        LinkedHashMap<Character, Double> testLinkedHashMap = sortHashMapByValues(mapTest);
-        LinkedHashMap<Character, Double> encodeLinkedHashMap = sortHashMapByValues(mapEncode);
+        LinkedHashMap<Character, Integer> testLinkedHashMap = sortHashMapByValues(mapTest);
+        LinkedHashMap<Character, Integer> encodeLinkedHashMap = sortHashMapByValues(mapEncode);
 
         List<Character> testKeys = new ArrayList<Character>(testLinkedHashMap.keySet());
         List<Character> encodeKeys = new ArrayList<Character>(encodeLinkedHashMap.keySet());
 
-        for (int i = 0; i < chars.length; i++) {
-            for(int j = 0; j < encodeKeys.size(); j++) {
-                if (chars[i] == encodeKeys.get(j)) {
-                    chars[i] = testKeys.get(j);
-                    sb.append(chars[i]);
+             for (int i = 0; i < chars.length; i++) {
+                for (int j = 0; j < encodeKeys.size(); j++) {
+                    if (chars[i] == encodeKeys.get(j)) {
+                        chars[i] = testKeys.get(j);
+                        sb.append(chars[i]);
+                        break;
+                    }
                 }
             }
-        }
         return sb.toString();
     }
 
-    public HashMap<Character, Double> createStatisticMap (String text) {
-        HashMap<Character, Double> map = new HashMap<>();
+    public HashMap<Character, Integer> createStatisticMap (String text) {
+        HashMap<Character, Integer> map = new HashMap<>();
 
-        ArrayList<Double> testCountList = new ArrayList<>();
+        ArrayList<Integer> testCountList = new ArrayList<>();
         ArrayList<Character> testCharList = new ArrayList<>();
-        Double count1 = 0.0;
+        int count1 = 0;
         for (Character aChar : cryptoChars) {
-            count1 = 0.0;
+            count1 = 0;
             for (int i = 0; i < text.length(); i++) {
                 if (text.charAt(i) == aChar) {
                     count1++;
@@ -91,14 +92,14 @@ public class Decoder {
             }
         }
         for (int i = 0; i < testCountList.size(); i++) {
-            map.put(testCharList.get(i), (((testCountList.get(i)*100)/text.length())));
+            map.put(testCharList.get(i), testCountList.get(i));
         }
         return map;
     }
 
 
-    public LinkedHashMap<Character, Double> sortHashMapByValues(HashMap<Character, Double> passedMap) {
-        LinkedHashMap<Character, Double> sort = passedMap.entrySet().stream()
+    public LinkedHashMap<Character, Integer> sortHashMapByValues(HashMap<Character, Integer> passedMap) {
+        LinkedHashMap<Character, Integer> sort = passedMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         return sort;
