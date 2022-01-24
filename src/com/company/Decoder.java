@@ -44,7 +44,7 @@ public class Decoder {
 
 
     public String statisticalAnalysis(String encode, String test) {
-        char[] chars = encode.toCharArray();
+        char[] encodeChars = encode.toCharArray();
         StringBuilder sb = new StringBuilder();
 
         HashMap<Character, Integer> mapTest = createStatisticMap(test);
@@ -56,11 +56,11 @@ public class Decoder {
         List<Character> testKeys = new ArrayList<Character>(testLinkedHashMap.keySet());
         List<Character> encodeKeys = new ArrayList<Character>(encodeLinkedHashMap.keySet());
 
-             for (int i = 0; i < chars.length; i++) {
+             for (int i = 0; i < encodeChars.length; i++) {
                 for (int j = 0; j < encodeKeys.size(); j++) {
-                    if (chars[i] == encodeKeys.get(j)) {
-                        chars[i] = testKeys.get(j);
-                        sb.append(chars[i]);
+                    if (encodeChars[i] == encodeKeys.get(j)) {
+                        encodeChars[i] = testKeys.get(j);
+                        sb.append(encodeChars[i]);
                         break;
                     }
                 }
@@ -73,16 +73,16 @@ public class Decoder {
 
         ArrayList<Integer> testCountList = new ArrayList<>();
         ArrayList<Character> testCharList = new ArrayList<>();
-        int count1 = 0;
+        int count = 0;
         for (Character aChar : cryptoChars) {
-            count1 = 0;
+            count = 0;
             for (int i = 0; i < text.length(); i++) {
                 if (text.charAt(i) == aChar) {
-                    count1++;
+                    count++;
                 }
             }
-            if (count1 > 0) {
-                testCountList.add(count1);
+            if (count > 0) {
+                testCountList.add(count);
             }
             for (int i = 0; i < text.length(); i++) {
                 if (text.charAt(i) == aChar) {

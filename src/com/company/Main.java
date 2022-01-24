@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+
+
 public class Main {
     public static String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,;:?!–-\" ";
     public static char[] cryptoChars = alphabet.toCharArray();
@@ -40,13 +42,13 @@ public class Main {
             int decodeKey = Integer.parseInt(systemBr.readLine());
             if (key == decodeKey) {
                 String decode = new Decoder().decodeText(encode, key);
-                String str = decode.replaceAll("\\.\s", ".\n");
+                String str = decode.replaceAll("(\\.\\s)", ".\n");
                 System.out.println(str);
                 writer1.write(str);
             } else if (decodeKey == 1) {
                 System.out.println("настало время Брутальной расшифровки...\n");
                 String brute = new Decoder().etTuBrute(encode, 0);
-                String str2 = brute.replaceAll("\\.\s", ".\n");
+                String str2 = brute.replaceAll("(\\.\\s)", ".\n");
                 System.out.println(str2);
                 System.out.println(" \nПроверка:\nВерный результат? введите да или нет:");
                 String answer = systemBr.readLine();
@@ -55,7 +57,7 @@ public class Main {
                         break;
                     } else {
                         String brute2 = new Decoder().etTuBrute(encode, key);
-                        System.out.println(brute2.replaceAll("\\.\s", ".\n"));
+                        System.out.println(brute2.replaceAll("(\\.\\s)", ".\n"));
 
                         System.out.println("\nПроверка:\nВерный результат? введите да или нет:");
                         String answer2 = systemBr.readLine();
@@ -77,7 +79,7 @@ public class Main {
                 String testLine = test.toString();
                 System.out.println("идёт анализ, подождите...");
                 System.out.println();
-                String statistical = new Decoder().statisticalAnalysis(encode, testLine).replaceAll("\\.", ".\n");
+                String statistical = new Decoder().statisticalAnalysis(encode, testLine).replaceAll("(\\.\\s)", ".\n");
                 System.out.println(statistical);
                 writer1.write(statistical);
             }
