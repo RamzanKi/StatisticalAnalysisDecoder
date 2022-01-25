@@ -3,7 +3,7 @@ package com.company;
 import static com.company.Main.cryptoChars;
 
 public class Encoder {
-    public String encodeText(String text, int key) {
+    public String encodeText(String text, int key){
         char[] chars = text.toCharArray();
         StringBuilder sb = new StringBuilder();
         if (key < 0) {

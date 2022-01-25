@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import static com.company.Main.*;
 
 public class Decoder {
-    public String decodeText(String encode, int key) {
+    public String decodeText(String encode, int key){
 
         StringBuilder sb = new StringBuilder();
         char[] chars = encode.toCharArray();
