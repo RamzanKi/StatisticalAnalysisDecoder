@@ -53,7 +53,7 @@ public class Decoder {
     //BruteForce. путем перебора, подобрать ключ и расшифровать текст.
     public void etTuBrute() throws IOException {
             String decode = "";
-            int key = 0;
+            int key = 123;
         BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите путь к файлу, который хотите расшифровать: ");
         String fileToDecodeName = systemBr.readLine();
@@ -84,27 +84,24 @@ public class Decoder {
                     }
                 }
                 decode = sb.toString();
-                if (decode.matches("[а-яА-Я](?s).*\\b,\\s\\b.*")) {
-                    System.out.println(decode.replaceAll("(\\.\\s)", ".\n"));
-                    System.out.println(" \nПроверка:\nВерный результат? введите да или нет:");
-                    String answer = systemBr.readLine();
-                        if (answer.equals("да")) {
-                            writerToDecode.write(decode.replaceAll("(\\.\\s)", ".\n"));
-                            break;
-                        } else {
-                            sb.setLength(0);
-                            decode = "";
-                            key++;
-                        }
-                }else {
-                    sb.setLength(0);
-                    decode = "";
-                    key++;
+                String[] split = decode.split("\\s");
+                for (int i = 0; i < split.length; i++){
+                    if (split[i].length() > 40){
+                        sb.setLength(0);
+                        decode = "";
+                        key++;
+                        break;
+                    }
+                }
+                if (decode.length() > 0){
+                    break;
                 }
             }
+            System.out.println(decode.replaceAll("(\\.\\s)", ".\n"));
+            writerToDecode.write(decode.replaceAll("(\\.\\s)", ".\n"));
+
         }
     }
-
 
     public void statisticalAnalysis() throws IOException {
         BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
