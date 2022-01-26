@@ -1,71 +1,171 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.company.Main.*;
 
 public class Decoder {
-    public String decodeText(String encode, int key){
 
-        StringBuilder sb = new StringBuilder();
-        char[] chars = encode.toCharArray();
-        StringBuilder rev = new StringBuilder(alphabet);
-        if (key < 0) {
-            key = -key;
+    public void decodeText(int key) throws IOException {
+        BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите путь к файлу, который хотите расшифровать: ");
+        String fileToDecodeName = systemBr.readLine();
+        System.out.println("Введите путь к файлу, в который хотите записать результат: ");
+        String resultFile = systemBr.readLine();
+        StringBuilder toDecode = new StringBuilder();
+        try (BufferedReader readerToDecode = Files.newBufferedReader(Path.of(fileToDecodeName));
+             FileWriter writerToDecode = new FileWriter(resultFile, false)
+        ) {
+            while (readerToDecode.ready()) {
+                toDecode.append(readerToDecode.readLine());
+            }
+            String encodeFile = toDecode.toString();
+
+            StringBuilder sb = new StringBuilder();
+            char[] chars = encodeFile.toCharArray();
+            StringBuilder rev = new StringBuilder(alphabet);
+            if (key < 0) {
+                key = -key;
+            }
+            char[] cryptoRev = rev.reverse().toString().toCharArray();
+            for (int i = 0; i < chars.length; i++) {
+                for (int j = 0; j < cryptoRev.length; j++) {
+                    if (chars[i] == cryptoRev[j]) {
+                        chars[i] = cryptoRev[(j + key) % cryptoRev.length];
+                        sb.append(chars[i]);
+                        break;
+                    }
+                }
+            }
+            System.out.println(sb.toString().replaceAll("(\\.\\s)", ".\n"));
+            writerToDecode.write(sb.toString().replaceAll("(\\.\\s)", ".\n"));
         }
-        char[] cryptoRev = rev.reverse().toString().toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            for (int j = 0; j < cryptoRev.length; j++) {
-                if (chars[i] == cryptoRev[j]) {
-                    chars[i] = cryptoRev[(j + key) % cryptoRev.length];
-                    sb.append(chars[i]);
-                    break;
+    }
+
+
+    //BruteForce. путем перебора, подобрать ключ и расшифровать текст.
+    public void etTuBrute() throws IOException {
+            String decode = "";
+            int key = 0;
+        BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите путь к файлу, который хотите расшифровать: ");
+        String fileToDecodeName = systemBr.readLine();
+        System.out.println("Введите путь к файлу, в который хотите записать результат: ");
+        String resultFile = systemBr.readLine();
+        StringBuilder toDecode = new StringBuilder();
+        try (BufferedReader readerToDecode = Files.newBufferedReader(Path.of(fileToDecodeName));
+             FileWriter writerToDecode = new FileWriter(resultFile, false)
+        ) {
+            while (readerToDecode.ready()) {
+                toDecode.append(readerToDecode.readLine());
+            }
+            String encodeFile = toDecode.toString();
+
+            StringBuilder sb = new StringBuilder();
+            char[] chars = encodeFile.toCharArray();
+            StringBuilder rev = new StringBuilder(alphabet);
+
+            char[] cryptoRev = rev.reverse().toString().toCharArray();
+            while (true) {
+                for (int i = 0; i < chars.length; i++) {
+                    for (int j = 0; j < cryptoRev.length; j++) {
+                        if (chars[i] == cryptoRev[j]) {
+                            chars[i] = cryptoRev[(j + key) % cryptoRev.length];
+                            sb.append(chars[i]);
+                            break;
+                        }
+                    }
+                }
+                decode = sb.toString();
+                if (decode.matches("[а-яА-Я](?s).*\\b,\\s\\b.*")) {
+                    System.out.println(decode.replaceAll("(\\.\\s)", ".\n"));
+                    System.out.println(" \nПроверка:\nВерный результат? введите да или нет:");
+                    String answer = systemBr.readLine();
+                        if (answer.equals("да")) {
+                            writerToDecode.write(decode.replaceAll("(\\.\\s)", ".\n"));
+                            break;
+                        } else {
+                            sb.setLength(0);
+                            decode = "";
+                            key++;
+                        }
+                }else {
+                    sb.setLength(0);
+                    decode = "";
+                    key++;
                 }
             }
         }
-        return sb.toString();
     }
-    //BruteForce. путем перебора, подобрать ключ и расшифровать текст.
-    public String etTuBrute(String encode, int key) {
-        String decode = "";
-        while (true) {
-            decode = decodeText(encode, key);
-            if (decode.matches("[а-яА-Я](?s).*\\b,\s\\b.*")) {
-                break;
-            } else {
-                decode = "";
-                key++;
+
+
+//    private void getNewKey() {
+//        return this.newKey;
+//    }
+
+
+    public void statisticalAnalysis() throws IOException {
+        BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите путь к тестовому файлу для сбора статистики: ");
+        String pathTest = systemBr.readLine();
+        StringBuilder testLine = new StringBuilder();
+        try (BufferedReader reader = Files.newBufferedReader(Path.of(pathTest))) {
+            while (reader.ready()) {
+                testLine.append(reader.readLine());
             }
         }
-        System.out.println("ключ: " + key);
-        return decode;
-    }
+        String test = testLine.toString();
 
+        System.out.println("Введите путь к файлу, который хотите расшифровать: ");
+        String fileToDecodeName = systemBr.readLine();
+        System.out.println("Введите путь к файлу, в который хотите записать результат: ");
+        String resultFile = systemBr.readLine();
+        StringBuilder toDecode = new StringBuilder();
+        try (BufferedReader readerToDecode = Files.newBufferedReader(Path.of(fileToDecodeName));
+             FileWriter writerToDecode = new FileWriter(resultFile, false)
+        ) {
+            while (readerToDecode.ready()) {
+                toDecode.append(readerToDecode.readLine());
+            }
+            String encodeFile = toDecode.toString();
 
-    public String statisticalAnalysis(String encode, String test) {
-        char[] encodeChars = encode.toCharArray();
-        StringBuilder sb = new StringBuilder();
+            char[] encodeChars = encodeFile.toCharArray();
+            StringBuilder sb = new StringBuilder();
 
-        HashMap<Character, Integer> mapTest = createStatisticMap(test);
-        HashMap<Character, Integer> mapEncode = createStatisticMap(encode);
+            HashMap<Character, Integer> mapTest = createStatisticMap(test);
+            HashMap<Character, Integer> mapEncode = createStatisticMap(encodeFile);
 
-        LinkedHashMap<Character, Integer> testLinkedHashMap = sortHashMapByValues(mapTest);
-        LinkedHashMap<Character, Integer> encodeLinkedHashMap = sortHashMapByValues(mapEncode);
+            LinkedHashMap<Character, Integer> testLinkedHashMap = sortHashMapByValues(mapTest);
+            LinkedHashMap<Character, Integer> encodeLinkedHashMap = sortHashMapByValues(mapEncode);
 
-        List<Character> testKeys = new ArrayList<Character>(testLinkedHashMap.keySet());
-        List<Character> encodeKeys = new ArrayList<Character>(encodeLinkedHashMap.keySet());
+            List<Character> testKeys = new ArrayList<Character>(testLinkedHashMap.keySet());
+            List<Character> encodeKeys = new ArrayList<Character>(encodeLinkedHashMap.keySet());
 
-             for (int i = 0; i < encodeChars.length; i++) {
-                for (int j = 0; j < encodeKeys.size(); j++) {
-                    if (encodeChars[i] == encodeKeys.get(j)) {
-                        encodeChars[i] = testKeys.get(j);
+            HashMap<Character, Character> finMap = new HashMap<>();
+
+            for (int i = 0; i < testKeys.size(); i++){
+                finMap.put(encodeKeys.get(i), testKeys.get(i));
+            }
+
+            for (int i = 0; i < encodeChars.length; i++) {
+                for (var pair : finMap.entrySet()) {
+                    if (encodeChars[i] == pair.getKey()) {
+                        encodeChars[i] = pair.getValue();
                         sb.append(encodeChars[i]);
                         break;
                     }
                 }
             }
-        return sb.toString();
+            System.out.println(sb.toString().replaceAll("(\\.\\s)", ".\n"));
+            writerToDecode.write(sb.toString().replaceAll("(\\.\\s)", ".\n"));
+        }
     }
 
     public HashMap<Character, Integer> createStatisticMap (String text) {
