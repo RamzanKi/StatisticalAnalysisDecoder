@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("""
-                Зашифровать файл 1.
-                Расшифровать файл 2.""");
+                Зашифровать файл 1
+                Расшифровать файл 2""");
         String verdict = systemBr.readLine();
         if (verdict.equals("1")) {
             new Encoder().encodeText();

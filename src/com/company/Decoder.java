@@ -140,12 +140,16 @@ public class Decoder {
             LinkedHashMap<Character, Integer> testLinkedHashMap = sortHashMapByValues(mapTest);
             LinkedHashMap<Character, Integer> encodeLinkedHashMap = sortHashMapByValues(mapEncode);
 
-            List<Character> testKeys = new ArrayList<Character>(testLinkedHashMap.keySet());
-            List<Character> encodeKeys = new ArrayList<Character>(encodeLinkedHashMap.keySet());
+            List<Character> testKeys = new ArrayList<>(testLinkedHashMap.keySet());
+            List<Character> encodeKeys = new ArrayList<>(encodeLinkedHashMap.keySet());
+
+            Collections.reverse(testKeys);
+            Collections.reverse(encodeKeys);
+
 
             HashMap<Character, Character> finMap = new HashMap<>();
 
-            for (int i = 0; i < testKeys.size(); i++){
+            for (int i = 0; i < encodeKeys.size(); i++){
                 finMap.put(encodeKeys.get(i), testKeys.get(i));
             }
 
