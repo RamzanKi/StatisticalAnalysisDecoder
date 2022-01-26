@@ -53,7 +53,7 @@ public class Decoder {
     //BruteForce. путем перебора, подобрать ключ и расшифровать текст.
     public void etTuBrute() throws IOException {
             String decode = "";
-            int key = 0;
+
         BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите путь к файлу, который хотите расшифровать: ");
         String fileToDecodeName = systemBr.readLine();
@@ -73,6 +73,7 @@ public class Decoder {
             StringBuilder rev = new StringBuilder(alphabet);
 
             char[] cryptoRev = rev.reverse().toString().toCharArray();
+            int key = 0;
             while (true) {
                 for (int i = 0; i < chars.length; i++) {
                     for (int j = 0; j < cryptoRev.length; j++) {
@@ -87,6 +88,7 @@ public class Decoder {
                 String[] split = decode.split("\\s");
                 for (int i = 0; i < split.length; i++){
                     if (split[i].length() > 40){
+                        chars = encodeFile.toCharArray();
                         sb.setLength(0);
                         decode = "";
                         key++;
