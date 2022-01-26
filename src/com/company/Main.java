@@ -5,7 +5,7 @@ import java.io.*;
 
 
 public class Main {
-    public static String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,;:?!–-\" ";
+    public static String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя. ";
     public static char[] cryptoChars = alphabet.toCharArray();
 
     public static void main(String[] args) throws IOException {

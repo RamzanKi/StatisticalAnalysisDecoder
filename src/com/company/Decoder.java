@@ -115,7 +115,7 @@ public class Decoder {
                 testLine.append(reader.readLine());
             }
         }
-        String test = testLine.toString();
+        String test = testLine.toString().toLowerCase();
 
         System.out.println("Введите путь к файлу, который хотите расшифровать: ");
         String fileToDecodeName = systemBr.readLine();
@@ -128,7 +128,7 @@ public class Decoder {
             while (readerToDecode.ready()) {
                 toDecode.append(readerToDecode.readLine());
             }
-            String encodeFile = toDecode.toString();
+            String encodeFile = toDecode.toString().toLowerCase();
 
             char[] encodeChars = encodeFile.toCharArray();
             StringBuilder sb = new StringBuilder();

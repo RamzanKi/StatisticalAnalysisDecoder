@@ -26,7 +26,7 @@ public class Encoder {
             while (reader1.ready()) {
                 text.append(reader1.readLine());
             }
-            String s = text.toString();
+            String s = text.toString().toLowerCase();
 
             System.out.println("Введите ключ кодирования: ");
             int key = Integer.parseInt(systemBr.readLine());
