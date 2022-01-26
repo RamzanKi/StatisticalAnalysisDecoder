@@ -53,7 +53,7 @@ public class Decoder {
     //BruteForce. путем перебора, подобрать ключ и расшифровать текст.
     public void etTuBrute() throws IOException {
             String decode = "";
-            int key = 123;
+            int key = 0;
         BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите путь к файлу, который хотите расшифровать: ");
         String fileToDecodeName = systemBr.readLine();
