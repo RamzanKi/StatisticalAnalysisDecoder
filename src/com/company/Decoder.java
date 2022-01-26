@@ -106,11 +106,6 @@ public class Decoder {
     }
 
 
-//    private void getNewKey() {
-//        return this.newKey;
-//    }
-
-
     public void statisticalAnalysis() throws IOException {
         BufferedReader systemBr = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите путь к тестовому файлу для сбора статистики: ");

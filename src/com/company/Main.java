@@ -15,30 +15,8 @@ public class Main {
                 Зашифровать файл 1.
                 Расшифровать файл 2.""");
         String verdict = systemBr.readLine();
-        int key;
         if (verdict.equals("1")) {
-            System.out.println("Введите путь к файлу, который нужно зашифровать: ");
-            String path = systemBr.readLine();
-
-            StringBuilder text = new StringBuilder();
-            System.out.println("Введите путь в хранилище, в котором хотите создать файл: ");
-            String newPath = systemBr.readLine();
-            System.out.println("Введите имя файла, который хотите создать: ");
-            String newFileName = systemBr.readLine();
-            try (BufferedReader reader1 = Files.newBufferedReader(Path.of(path));
-                 FileWriter writer1 = new FileWriter(newPath + newFileName, false)
-            ) {
-                while (reader1.ready()) {
-                    text.append(reader1.readLine());
-                }
-                String s = text.toString();
-
-                System.out.println("Введите ключ кодирования: ");
-                key = Integer.parseInt(systemBr.readLine());
-                String encode = new Encoder().encodeText(s, key);
-                System.out.println(encode);
-                writer1.write(encode);
-            }
+            new Encoder().encodeText();
         }
         if (verdict.equals("2")) {
             System.out.println("""
