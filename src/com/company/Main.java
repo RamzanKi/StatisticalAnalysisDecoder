@@ -33,8 +33,6 @@ public class Main {
                 new Decoder().etTuBrute();
 
             } else if (method == 3) {
-                System.out.println("идёт анализ, подождите...");
-                System.out.println();
                 new Decoder().statisticalAnalysis();
 
             }
