@@ -95,8 +95,8 @@ public class Decoder {
         char[] encodeChars = encodeFile.toCharArray();
         StringBuilder sb = new StringBuilder();
 
-        HashMap<Character, Integer> mapTest = createStatisticMap(test);
-        HashMap<Character, Integer> mapEncode = createStatisticMap(encodeFile);
+        LinkedHashMap<Character, Integer> mapTest = createStatisticMap(test);
+        LinkedHashMap<Character, Integer> mapEncode = createStatisticMap(encodeFile);
 
         LinkedHashMap<Character, Integer> testLinkedHashMap = sortHashMapByValues(mapTest);
         LinkedHashMap<Character, Integer> encodeLinkedHashMap = sortHashMapByValues(mapEncode);
@@ -108,7 +108,7 @@ public class Decoder {
         Collections.reverse(encodeKeys);
 
 
-        HashMap<Character, Character> finMap = new HashMap<>();
+        LinkedHashMap<Character, Character> finMap = new LinkedHashMap<>();
 
         for (int i = 0; i < encodeKeys.size(); i++) {
             finMap.put(encodeKeys.get(i), testKeys.get(i));
@@ -128,8 +128,8 @@ public class Decoder {
     }
 
 
-    public HashMap<Character, Integer> createStatisticMap(String text) {
-        HashMap<Character, Integer> map = new HashMap<>();
+    public LinkedHashMap<Character, Integer> createStatisticMap(String text) {
+        LinkedHashMap<Character, Integer> map = new LinkedHashMap<>();
 
         ArrayList<Integer> testCountList = new ArrayList<>();
         ArrayList<Character> testCharList = new ArrayList<>();
